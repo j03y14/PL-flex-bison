@@ -18,6 +18,12 @@
 	%token T_WHITESPACE
 	
 	한 토큰 안에서 lexeme이 어떤건지는 yyval 안에 들어있다.
+	예를들어,
+	Exp : Exp ‘+’ T_INTEGER {$$=$1+$3;}
+		| Exp ‘-’ T_INTEGER {$$=$1-$3;}
+ 		| T_INTEGER {$$=$1;} 
+	같은 경우에 $1, $3의 값이 각 토큰을 가져왔을 때 yyval에 들어있는 것.
+	
 	
 ### 3. 참고 자료
 <https://www.joinc.co.kr/w/Site/Development/Env/Yacc>
