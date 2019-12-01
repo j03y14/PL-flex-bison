@@ -36,25 +36,98 @@ void yyerror(const char* s);
 program : T_KEYWORD T_ID T_DELIMITER declarations subprogram_declarations compound_statement 
 {
   if(strcmp($1,"mainprog")!=0) 
-    { printf("1\n");
-      yyerror($1);} 
+    { yyerror($1);} 
 };
 
-declarations :  ;
+declarations : type identifier_list T_DELIMITER declarations
+{
+  if(strcmp($3, ";")!=0)
+    { yyerror($3);}
+};
 
+declarations : ;
 
-subprogram_declarations :  ;
+identifier_list : T_ID T_DELIMITER identifier_list
+{
+  if(strcmp($2,";")!=0)
+    {yyerror($2);}
+};
 
+identifier_list : T_ID ;
+
+type : standard_type;
+
+type : standard_type T_DELIMITER T_INTEGER T_DELIMITER
+{
+  if(strcmp($2,"[")!=0)
+    {yyerror($2);}
+  if(strcmp($4,"]")!=0)
+    {yyerror($4);}
+};
+
+type : standard_type T_DELIMITER T_FLOAT T_DELIMITER
+{
+  if(strcmp($2,"[")!=0)
+    {yyerror($2);}
+  if(strcmp($4,"]")!=0)
+    {yyerror($4);}
+};
+
+standard_type : T_DATATYPE;
+
+subprogram_declarations :  subprogram_declarations subprogram_declarations | ;
+
+subprogram_declarations : subprogram_head declarations compound_statement;
+
+subprogram_head : T_KEYWORD T_ID arguments T_DELIMITER standard_type T_DELIMITER
+{
+  if(strcmp($1,"function")!=0)
+    {yyerror($1);}
+  if(strcmp($4,":")!=0)
+    {yyerror($4);}
+  if(strcmp($6,"[")!=0)
+    {yyerror($6);}
+};
+
+subprogram_head : T_KEYWORD T_ID arguments T_DELIMITER
+{
+  if(strcmp($1,"procedure")!=0)
+    {yyerror($1);}
+  if(strcmp($4,";")!=0)
+    {yyerror($4);}
+};
+
+arguments : T_DELIMITER parameter_list T_DELIMITER
+{
+  if(strcmp($1,"(")!=0)
+    {yyerror($1);}
+  if(strcmp($3,")")!=0)
+    {yyerror($3);}
+};
+
+arguments : ;
+
+parameter_list : identifier_list T_DELIMITER type
+{
+  if(strcmp($2,":")!=0)
+    {yyerror($2);}
+};
+
+parameter_list : identifier_list T_DELIMITER type T_DELIMITER parameter_list
+{
+  if(strcmp($2,":")!=0)
+    {yyerror($2);}
+  if(strcmp($4,";")!=0)
+    {yyerror($4);}
+};
 
 compound_statement : T_KEYWORD statement_list T_KEYWORD
 {
   if(strcmp($1,"begin")!=0) 
-    { printf("2 %s \n",$1);
-      yyerror($1);} 
+    { yyerror($1);} 
 
   if(strcmp($3,"end")!=0) 
-    { printf("3\n");
-      yyerror($3);} 
+    { yyerror($3);} 
 
 };
 
