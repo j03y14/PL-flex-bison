@@ -1,0 +1,32 @@
+/*
+Programming
+Language Test Code
+*/
+
+mainprog abc;
+ var i, l : int;
+	var d : float;
+	
+	//function program
+	function circle(pi: float; r: int): float;
+		begin
+			cirarea=0;
+			cirarea=pi*r*r;
+
+			return cirarea
+		end
+	
+	begin
+		while(i<=10)
+		cir1=circle(3.14, 5);
+
+		if(i)
+		then return cir1
+		else return d;
+
+		if(!i)
+		then return cir1;
+
+		print(cir1)
+	end
+// dd

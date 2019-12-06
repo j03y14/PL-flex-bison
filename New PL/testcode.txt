@@ -1,0 +1,19 @@
+/*
+testcode #1 - undeclared variable 
+*/
+
+mainprog test;	//single line comment test
+ var a,b,c: int;
+ var x,y,z: float;
+ var p: array[10] of int;
+ var q: array[10] of float;
+ procedure foo(a: float);
+  var b: float;
+ begin
+  b = c
+ end
+
+begin
+ if (b + 1 < 0) then a := 1
+
+end
